@@ -1,57 +1,55 @@
 import React, {Component} from 'react';
-
+import Label from './Label';
 export default class MessagePrev extends Component{
-  constructor(){
-    super();
-    this.state = {
-      stared:{
-        isChecked: false
-      },
-      checkbox:{
-        isChecked: false
-      }
-    }
-    this.handelClick = this.handelClick.bind(this);
-  }
-
-  handelClick(){
-    if(this.state.stared.isChecked){
-      this.setState({stared:{isChecked: false}})
-    }else if(!this.state.stared.isChecked){
-      this.setState({stared:{isChecked: true}})
-    }
-  }
 
   render(){
     const starBtn = ()=>{
-      if(!this.state.stared.isChecked){
+      if(!this.props.data.starred){
         return 'star fa fa-star-o';
       }
       return 'star fa fa-star';
     }
 
     const checkbox = ()=>{
-      if(!this.state.checkbox.isChecked){
+      if(!this.props.data.selected){
         return null;
       }
       return 'checked';
     }
 
+    const read = ()=>{
+      if(!this.props.data.read){
+        return 'unread';
+      }
+      return 'read';
+    }
+
+    const selected = ()=>{
+      if(!this.props.data.selected){
+        return null;
+      }
+      return 'selected';
+    }
+
+
     return(
-      <div className="row message unread">
+      <div className={'row message ' + read()+ " " + selected()}>
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
-              <input type="checkbox" checked={checkbox()}/>
+              <input type="checkbox" checked={checkbox()} onChange ={()=>{this.props.check(this.props.data)}}/>
             </div>
             <div className="col-xs-2">
-              <i className={starBtn()} onClick={this.handelClick}></i>
+              <i className={starBtn()} onClick={()=>{this.props.star(this.props.data)}}></i>
             </div>
           </div>
         </div>
         <div className="col-xs-11">
-          <a href="#">
-            Here is some message text that has a bunch of stuff
+          {this.props.data.labels.map((ele, index)=>(
+            <Label label={ele} key={index}/>
+          ))}
+          <a href="#" onClick={()=>{this.props.markAsRead(this.props.data)}}>
+            {this.props.data.subject}
           </a>
         </div>
       </div>
