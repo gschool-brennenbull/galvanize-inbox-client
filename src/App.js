@@ -42,6 +42,7 @@ export default class App extends Component {
     this.addLabel=this.addLabel.bind(this);
     this.removeLabel=this.removeLabel.bind(this);
     this.deleteAllSelected=this.deleteAllSelected.bind(this);
+    this.markSelectedAsUnread=this.markSelectedAsUnread.bind(this);
   }
 
 // NOTE: Single Message Functions---------
@@ -88,6 +89,15 @@ export default class App extends Component {
   deselectAll(){
     this.state.messages.forEach((ele)=>{
       ele.selected = false;
+    })
+    this.setState({messages:this.state.messages})
+  }
+
+  markSelectedAsUnread(){
+    this.state.messages.forEach((ele)=>{
+      if(ele.selected){
+        ele.read = false;
+      }
     })
     this.setState({messages:this.state.messages})
   }
@@ -153,7 +163,8 @@ export default class App extends Component {
     return (
       <div className='container'>
         <ToolBar data={findSelected()} select={this.selectAll} deselect={this.deselectAll}
-        markAsRead = {this.markSelectedAsRead} max={this.state.messages.length} read={count()} setLabel={this.addLabel} unsetLabel={this.removeLabel} deletelSelected={this.deleteAllSelected}/>
+        markAsRead={this.markSelectedAsRead} markAsUnread={this.markSelectedAsUnread}
+        max={this.state.messages.length} read={count()} setLabel={this.addLabel} unsetLabel={this.removeLabel} deletelSelected={this.deleteAllSelected}/>
         {this.state.messages.map((ele, index)=>(
           <MessagePrev  data={ele} key={index} markAsRead={this.makeRead} check={this.selectChange} star={this.starClick} />
         ))}

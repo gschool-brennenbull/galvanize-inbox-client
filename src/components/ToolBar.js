@@ -73,7 +73,7 @@ export default class ToolBar extends Component{
           <button className="btn btn-default" disabled={enable()} onClick={()=>{this.props.markAsRead()}}>
             Mark As Read
           </button>
-          <button className="btn btn-default" disabled={enable()}>
+          <button className="btn btn-default" disabled={enable()} onClick={()=>{this.props.markAsUnread()}}>
             Mark As Unread
           </button>
           <select className="form-control label-select" disabled={enable()} onChange={this.addLabel}>
