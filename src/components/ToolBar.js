@@ -41,7 +41,9 @@ export default class ToolBar extends Component{
   }
 
   addLabel(e){
-    this.props.setLabel(this.props.data, e.target.value);
+    if(e.target.value !== 'Apply label'){
+      this.props.setLabel(this.props.data, e.target.value);
+    }
   }
 
   removeLabel(e){
@@ -76,14 +78,14 @@ export default class ToolBar extends Component{
           <button className="btn btn-default" disabled={enable()} onClick={()=>{this.props.markAsUnread()}}>
             Mark As Unread
           </button>
-          <select className="form-control label-select" disabled={enable()} onChange={this.addLabel}>
-            <option>Apply label</option>
+          <select className="form-control label-select" disabled={enable()} onChange={this.addLabel} value = {null}>
+            <option value={null}>Apply label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
           </select>
-          <select className="form-control label-select" disabled={enable()} onChange={this.removeLabel}>
-            <option>Remove label</option>
+          <select className="form-control label-select" disabled={enable()} onChange={this.removeLabel} value = {null}>
+            <option value={null}>Remove label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>

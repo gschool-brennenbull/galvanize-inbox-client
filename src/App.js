@@ -43,6 +43,7 @@ export default class App extends Component {
     this.removeLabel=this.removeLabel.bind(this);
     this.deleteAllSelected=this.deleteAllSelected.bind(this);
     this.markSelectedAsUnread=this.markSelectedAsUnread.bind(this);
+    this.countSelected=this.countSelected.bind(this);
   }
 
 // NOTE: Single Message Functions---------
@@ -129,7 +130,21 @@ export default class App extends Component {
     this.setState({messages:this.state.messages});
   }
 
+  countSelected(){
+    let count = 0;
+    this.state.messages.forEach((ele, index)=>{
+      if(ele.selected){
+        count ++;
+      }
+    });
+    return count;
+  }
+
   deleteAllSelected(){
+    if(this.countSelected() === this.state.messages.length){
+      this.setState({messages:[]});
+      return
+    }
     this.state.messages.forEach((ele, index)=>{
       if(ele.selected){
         this.state.messages.splice(index,1);
